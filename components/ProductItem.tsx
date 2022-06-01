@@ -3,16 +3,18 @@ import { memo } from 'react'
 interface ProductItemProps {
   product: {
     id: number;
+    title: string;
     price: number;
-    title: string
-  }
+    priceFormatted: string
+  };
+  addToWishList: (id: number) => void
 }
 
-function ProductItemComponent({ product }: ProductItemProps) {
+function ProductItemComponent({ product, addToWishList }: ProductItemProps) {
 
   return (
     <div>
-      {product.title} - <strong>{product.price}</strong>
+      {product.title} - <strong>{product.priceFormatted}</strong>
     </div>
   )
 }
