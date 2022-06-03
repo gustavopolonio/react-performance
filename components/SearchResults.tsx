@@ -1,4 +1,5 @@
-import { ProductItem } from './ProductItem'
+import { List, ListRowRenderer } from 'react-virtualized'
+import ProductItem from './ProductItem'
 
 interface SearchResultsProps {
   results: Array<{
@@ -12,14 +13,26 @@ interface SearchResultsProps {
 }
 
 export function SearchResults({ results, addToWishList, totalPriceFormatted }: SearchResultsProps) {
+  const rowRender: ListRowRenderer = ({ index, key, style }) => {
+    return (
+      <div key={key} style={style}>
+        <ProductItem product={results[index]} addToWishList={addToWishList} />
+      </div>
+    )
+  }
 
   return (
     <div>
       <strong>{totalPriceFormatted}</strong>
 
-      {results.map(product => (
-        <ProductItem key={product.id} product={product} addToWishList={addToWishList} />
-      ))}
+      <List
+        height={300}
+        rowHeight={30}
+        width={900}
+        overscanRowCount={5}
+        rowCount={results.length}
+        rowRenderer={rowRender}
+      />
     </div>
   )
 }
